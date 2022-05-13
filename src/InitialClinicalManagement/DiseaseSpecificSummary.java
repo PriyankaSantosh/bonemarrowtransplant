@@ -3,9 +3,12 @@ package InitialClinicalManagement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
@@ -32,7 +35,12 @@ public void DiseaseSpecificSummary() throws InterruptedException
 	driver.findElement(By.id("edit-pass")).sendKeys("PriyankaGK");
 	driver.findElement(By.id("edit-submit")).click();
 	driver.findElement(By.xpath("//a[@href='/patients?=&tid%5B%5D=10']")).click();
-	driver.findElement(By.xpath("//a[@href='/add-new-patient-details']")).click();
+	
+	
+	driver.navigate().to("https://dev.bmtplus.com/node/add/patient");
+	driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+	
+	//driver.findElement(By.xpath("//a[@href='/add-new-patient-details']")).click();
 	driver.findElement(By.xpath("//div[@id='edit_field_patient_disease_und_chosen']")).click();
 	driver.findElement(By.xpath("//li[text()='Severe Thalassemia (major or intermedia)']")).click();
 	driver.findElement(By.xpath("//div[@id='edit_og_group_ref_und_chosen']")).click();
@@ -48,7 +56,15 @@ public void DiseaseSpecificSummary() throws InterruptedException
   System.out.println(dd1);
     driver.findElement(By.xpath("//input[@id='edit-field-patient-name-und-0-value']")).sendKeys("testPatient"+""+dd1);
     driver.findElement(By.id("edit-field-patient-date-of-birth-und-0-value-datepicker-popup-0")).sendKeys("9 Nov 2001");
-    driver.findElement(By.id("edit-field-patient-gender-und-female")).click();
+    driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+
+
+
+    WebElement ele213 = driver.findElement(By.xpath("//input[@id='edit-field-patient-gender-und-male']"));
+    JavascriptExecutor executor21115 = (JavascriptExecutor)driver;
+    executor21115.executeScript("arguments[0].click();", ele213);    
+    
+    
     driver.findElement(By.id("edit-submit")).click();
     driver.findElement(By.xpath("//a[@id='quicktabs-tab-patient_summary_pre_bmt-2']")).click();
     Thread.sleep(9000);
